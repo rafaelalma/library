@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="main.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <h1>LIBRARY</h1>
+    </header>
+    <div class="card-grid-container">
+      <div class="card-grid" id="card-grid"></div>
+    </div>
+    <button class="add-book-btn" id="add-book-btn">Add book</button>
+
+    <template id="card-template">
+      <div class="card">
+        <p id="title"></p>
+        <p>by <span id="author"></span></p>
+        <p id="isRead"></p>
+      </div>
+    </template>
+  </body>
+</html>
