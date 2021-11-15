@@ -1,8 +1,14 @@
+// TODO: Refactor
+
 function Book(title, author, isRead) {
   this.title = title;
   this.author = author;
   this.isRead = isRead;
 }
+
+Book.prototype.toggleRead = function () {
+  this.isRead = !this.isRead;
+};
 
 const eloquentJS = new Book("Eloquent JavaScript", "Marijn Haverbeke", true);
 const jsGoodParts = new Book(
@@ -29,6 +35,7 @@ function getBookCard(book, index) {
   return `<div class="card" data-index="${index}">
         <p>${book.title}</p>
         <p>${book.author}</p>
+        <p class="book-is-read">${book.isRead ? "Read" : "Not read"}</p>
         <button class="btn delete-btn">Delete</button>
       </div>`;
 }
@@ -51,6 +58,12 @@ function initializeLibrary(library) {
   deleteBtns.forEach((deleteBtn) => {
     deleteBtn.addEventListener("click", deleteBook);
   });
+
+  const bookIsReadParagraph = document.querySelectorAll(".book-is-read");
+
+  bookIsReadParagraph.forEach((p) => {
+    p.addEventListener("click", toggleIsRead);
+  });
 }
 
 function addBookToLibrary(book) {
@@ -62,6 +75,10 @@ function addBookToLibrary(book) {
   cardGrid.lastElementChild
     .querySelector(".delete-btn")
     .addEventListener("click", deleteBook);
+
+  cardGrid.lastElementChild
+    .querySelector(".book-is-read")
+    .addEventListener("click", toggleIsRead);
 }
 
 function updateCardsDataIndex() {
@@ -81,6 +98,16 @@ function deleteBook(event) {
   updateCardsDataIndex();
 }
 
+function toggleIsRead(event) {
+  const cardToToggle = event.currentTarget.parentElement;
+  const cardToToggleIndex = cardToToggle.dataset.index;
+
+  const bookToToggle = myLibrary[cardToToggleIndex];
+  bookToToggle.toggleRead();
+
+  event.currentTarget.textContent = bookToToggle.isRead ? "Read" : "Not read";
+}
+
 addBookBtn.addEventListener("click", () => {
   newBookForm.classList.toggle("hide");
 });
@@ -88,11 +115,17 @@ addBookBtn.addEventListener("click", () => {
 addBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
-  const newBook = new Book(newBookTitle.value, newBookAuthor.value);
+  const newBookIsReadValue = newBookIsRead.value === "yes" ? true : false;
+  const newBook = new Book(
+    newBookTitle.value,
+    newBookAuthor.value,
+    newBookIsReadValue
+  );
   addBookToLibrary(newBook);
 
   newBookTitle.value = "";
   newBookAuthor.value = "";
+  newBookIsRead.value = "no";
   newBookForm.classList.toggle("hide");
 });
 
