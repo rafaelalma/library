@@ -11,7 +11,7 @@ const jsGoodParts = new Book(
   true
 );
 
-const myLibrary = [eloquentJS, jsGoodParts, eloquentJS, jsGoodParts];
+const myLibrary = [eloquentJS, jsGoodParts];
 
 const cardGrid = document.querySelector(".card-grid");
 
@@ -25,26 +25,61 @@ const newBookIsRead = document.querySelector("#new-book-is-read");
 const addBtn = document.querySelector("#add-btn");
 const backBtn = document.querySelector("#back-btn");
 
+function getBookCard(book, index) {
+  return `<div class="card" data-index="${index}">
+        <p>${book.title}</p>
+        <p>${book.author}</p>
+        <button class="btn delete-btn">Delete</button>
+      </div>`;
+}
+
 function displayBooks(books) {
   let html = "";
 
-  books.forEach((book) => {
-    html += `<div class="card">
-        <p>${book.title}</p>
-        <p>${book.author}</p>
-      </div>`;
+  books.forEach((book, index) => {
+    html += getBookCard(book, index);
   });
 
   cardGrid.innerHTML = html;
 }
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
+function initializeLibrary(library) {
+  displayBooks(library);
 
-  displayBooks(myLibrary);
+  const deleteBtns = document.querySelectorAll(".delete-btn");
+
+  deleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", deleteBook);
+  });
 }
 
-displayBooks(myLibrary);
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+  const index = myLibrary.length - 1;
+
+  cardGrid.insertAdjacentHTML("beforeend", getBookCard(book, index));
+
+  cardGrid.lastElementChild
+    .querySelector(".delete-btn")
+    .addEventListener("click", deleteBook);
+}
+
+function updateCardsDataIndex() {
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach((card, index) => {
+    card.dataset.index = index;
+  });
+}
+
+function deleteBook(event) {
+  const cardToDelete = event.currentTarget.parentElement;
+  const cardToDeleteIndex = cardToDelete.dataset.index;
+
+  cardToDelete.remove();
+  myLibrary.splice(cardToDeleteIndex, 1);
+  updateCardsDataIndex();
+}
 
 addBookBtn.addEventListener("click", () => {
   newBookForm.classList.toggle("hide");
@@ -66,3 +101,5 @@ backBtn.addEventListener("click", (event) => {
 
   newBookForm.classList.toggle("hide");
 });
+
+initializeLibrary(myLibrary);
