@@ -1,21 +1,7 @@
-const myLibrary = [];
-
 function Book(title, author, isRead) {
   this.title = title;
   this.author = author;
   this.isRead = isRead;
-}
-
-Book.prototype.info = function () {
-  return `${this.title} by ${this.author} is ${
-    this.isRead ? "read" : "not read yet"
-  }`;
-};
-
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-
-  return myLibrary;
 }
 
 const eloquentJS = new Book("Eloquent JavaScript", "Marijn Haverbeke", true);
@@ -25,27 +11,58 @@ const jsGoodParts = new Book(
   true
 );
 
-addBookToLibrary(eloquentJS);
-addBookToLibrary(jsGoodParts);
+const myLibrary = [eloquentJS, jsGoodParts, eloquentJS, jsGoodParts];
 
-const cardTemplateContent = document.getElementById("card-template").content;
-const cardGrid = document.getElementById("card-grid");
-const cardGridFragment = document.createDocumentFragment();
+const cardGrid = document.querySelector(".card-grid");
+
+const addBookBtn = document.querySelector("#add-book-btn");
+const newBookForm = document.querySelector(".new-book-form");
+
+const newBookAuthor = document.querySelector("#new-book-author");
+const newBookTitle = document.querySelector("#new-book-title");
+const newBookIsRead = document.querySelector("#new-book-is-read");
+
+const addBtn = document.querySelector("#add-btn");
+const backBtn = document.querySelector("#back-btn");
 
 function displayBooks(books) {
+  let html = "";
+
   books.forEach((book) => {
-    cardTemplateContent.querySelector("#title").textContent = book.title;
-    cardTemplateContent.querySelector("#author").textContent = book.author;
-    cardTemplateContent.querySelector("#isRead").textContent = `${
-      book.isRead ? "Read" : "Not read"
-    }`;
-
-    const cardTemplateClone = cardTemplateContent.cloneNode(true);
-
-    cardGridFragment.appendChild(cardTemplateClone);
+    html += `<div class="card">
+        <p>${book.title}</p>
+        <p>${book.author}</p>
+      </div>`;
   });
 
-  cardGrid.appendChild(cardGridFragment);
+  cardGrid.innerHTML = html;
+}
+
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+
+  displayBooks(myLibrary);
 }
 
 displayBooks(myLibrary);
+
+addBookBtn.addEventListener("click", () => {
+  newBookForm.classList.toggle("hide");
+});
+
+addBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const newBook = new Book(newBookTitle.value, newBookAuthor.value);
+  addBookToLibrary(newBook);
+
+  newBookTitle.value = "";
+  newBookAuthor.value = "";
+  newBookForm.classList.toggle("hide");
+});
+
+backBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  newBookForm.classList.toggle("hide");
+});

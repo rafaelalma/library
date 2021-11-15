@@ -12,17 +12,29 @@
     <header class="header">
       <h1>LIBRARY</h1>
     </header>
-    <div class="card-grid-container">
-      <div class="card-grid" id="card-grid"></div>
-    </div>
-    <button class="add-book-btn" id="add-book-btn">Add book</button>
 
-    <template id="card-template">
-      <div class="card">
-        <p id="title"></p>
-        <p>by <span id="author"></span></p>
-        <p id="isRead"></p>
+    <div class="card-grid-container">
+      <div class="card-grid"></div>
+    </div>
+
+    <button class="btn" id="add-book-btn">Add book</button>
+
+    <form class="new-book-form hide">
+      <label for="new-book-title">Title: </label>
+      <input type="text" id="new-book-title" />
+
+      <label for="new-book-author">Author: </label>
+      <input type="text" id="new-book-author" />
+
+      <!-- <div class="checkbox-container">
+        <label for="new-book-is-read">Read?</label>
+        <input type="checkbox" id="new-book-is-read" />
+      </div> -->
+
+      <div class="btns-container">
+        <button class="btn" id="add-btn">Add</button>
+        <button class="btn" id="back-btn">Back</button>
       </div>
-    </template>
+    </form>
   </body>
 </html>

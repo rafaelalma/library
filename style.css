@@ -13,6 +13,7 @@ body {
 
 .header {
   padding: 2em;
+  color: #333;
 }
 
 .card-grid-container {
@@ -28,7 +29,7 @@ body {
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
-  gap: 2em;
+  gap: 1em;
 }
 
 .card {
@@ -49,7 +50,7 @@ body {
   text-align: center;
 }
 
-.add-book-btn {
+.btn {
   padding: 1em;
   background-color: violet;
   border: none;
@@ -60,13 +61,57 @@ body {
   font-size: 1.2em;
 
   cursor: pointer;
+}
 
+.btn:hover {
+  background-color: rgb(216, 116, 216);
+  transform: scale(1.1);
+}
+
+#add-book-btn {
   position: fixed;
   top: 1em;
   right: 1em;
 }
 
-.add-book-btn:hover {
-  background-color: rgb(216, 116, 216);
-  transform: scale(1.1);
+.new-book-form {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1em;
+  background-color: honeydew;
+  border-radius: 10px;
+  border: 2px solid black;
+
+  width: 300px;
+}
+
+.new-book-form label {
+  margin-top: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.new-book-form input {
+  margin-top: 0.5em;
+}
+
+.checkbox-container {
+  margin-top: 1em;
+}
+
+.btns-container {
+  margin-top: 2em;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.hide {
+  display: none;
 }
