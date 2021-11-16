@@ -1,5 +1,3 @@
-// TODO: Refactor
-
 function Book(title, author, isRead) {
   this.title = title;
   this.author = author;
@@ -9,15 +7,6 @@ function Book(title, author, isRead) {
 Book.prototype.toggleRead = function () {
   this.isRead = !this.isRead;
 };
-
-const eloquentJS = new Book("Eloquent JavaScript", "Marijn Haverbeke", true);
-const jsGoodParts = new Book(
-  "JavaScript: The Good Parts",
-  "Douglas Crockford",
-  true
-);
-
-const myLibrary = [eloquentJS, jsGoodParts];
 
 const cardGrid = document.querySelector(".card-grid");
 
@@ -35,35 +24,11 @@ function getBookCard(book, index) {
   return `<div class="card" data-index="${index}">
         <p>${book.title}</p>
         <p>${book.author}</p>
-        <p class="book-is-read">${book.isRead ? "Read" : "Not read"}</p>
+        <button class="book-is-read">${
+          book.isRead ? "Read" : "Not read"
+        }</button>
         <button class="btn delete-btn">Delete</button>
       </div>`;
-}
-
-function displayBooks(books) {
-  let html = "";
-
-  books.forEach((book, index) => {
-    html += getBookCard(book, index);
-  });
-
-  cardGrid.innerHTML = html;
-}
-
-function initializeLibrary(library) {
-  displayBooks(library);
-
-  const deleteBtns = document.querySelectorAll(".delete-btn");
-
-  deleteBtns.forEach((deleteBtn) => {
-    deleteBtn.addEventListener("click", deleteBook);
-  });
-
-  const bookIsReadParagraph = document.querySelectorAll(".book-is-read");
-
-  bookIsReadParagraph.forEach((p) => {
-    p.addEventListener("click", toggleIsRead);
-  });
 }
 
 function addBookToLibrary(book) {
@@ -135,4 +100,13 @@ backBtn.addEventListener("click", (event) => {
   newBookForm.classList.toggle("hide");
 });
 
-initializeLibrary(myLibrary);
+const eloquentJS = new Book("Eloquent JavaScript", "Marijn Haverbeke", true);
+const jsGoodParts = new Book(
+  "JavaScript: The Good Parts",
+  "Douglas Crockford",
+  true
+);
+
+const myLibrary = [eloquentJS, jsGoodParts];
+
+myLibrary.forEach((book) => addBookToLibrary(book));

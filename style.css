@@ -118,9 +118,11 @@ body {
 }
 
 .book-is-read {
+  all: unset;
+
   cursor: pointer;
   color: black;
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: bold;
 }
 
