@@ -20,6 +20,8 @@ const newBookIsRead = document.querySelector("#new-book-is-read");
 const addBtn = document.querySelector("#add-btn");
 const backBtn = document.querySelector("#back-btn");
 
+const myLibrary = [];
+
 function getBookCard(book, index) {
   return `<div class="card" data-index="${index}">
         <p>${book.title}</p>
@@ -100,6 +102,7 @@ backBtn.addEventListener("click", (event) => {
   newBookForm.classList.toggle("hide");
 });
 
+// Initialize library
 const eloquentJS = new Book("Eloquent JavaScript", "Marijn Haverbeke", true);
 const jsGoodParts = new Book(
   "JavaScript: The Good Parts",
@@ -107,6 +110,6 @@ const jsGoodParts = new Book(
   true
 );
 
-const myLibrary = [eloquentJS, jsGoodParts];
+const books = [eloquentJS, jsGoodParts];
 
-myLibrary.forEach((book) => addBookToLibrary(book));
+books.forEach((book) => addBookToLibrary(book));
